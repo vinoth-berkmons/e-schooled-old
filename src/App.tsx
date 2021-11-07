@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Suspense} from 'react'
+import {BrowserRouter} from 'react-router-dom'
+import { LayoutProvider, LayoutSplashScreen } from './app/common/layout/core'
+// import {I18nProvider} from '../_metronic/i18n/i18nProvider'
+// import {LayoutProvider, LayoutSplashScreen} from '../_metronic/layout/core'
+// import AuthInit from './modules/auth/redux/AuthInit'
+// import {Routes} from './routing/Routes'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type Props = {
+  basename: string
 }
 
-export default App;
+const App: React.FC<Props> = ({basename}) => {
+  return (
+    <Suspense fallback={<LayoutSplashScreen />}>
+      <BrowserRouter basename={basename}>
+        {/* <I18nProvider> */}
+          <LayoutProvider>
+            {/* <AuthInit>
+              <Routes />
+            </AuthInit> */}
+          </LayoutProvider>
+        {/* </I18nProvider> */}
+      </BrowserRouter>
+    </Suspense>
+  )
+}
+
+export {App}
